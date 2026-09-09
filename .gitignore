@@ -1,0 +1,28 @@
+# Python virtual environment
+.venv/
+venv/
+ENV/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest & testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Matplotlib cache
+.mpl_cache/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Model checkpoints (keep production .joblib if desired, ignore scratch)
+*.tmp
+*.log
