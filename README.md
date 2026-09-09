@@ -73,7 +73,9 @@ Extracts Random Forest feature importances, performs residual error diagnostics,
 
 ---
 
-## 8. System Architecture
+## 8. System Architecture & Workflow
+
+### 8.1 System Architecture
 ```mermaid
 graph TD
     User([Student / Faculty]) --> CLI[main.py CLI Interface]
@@ -89,26 +91,65 @@ graph TD
     Pipeline --> Reporting[Reporting Engine]
     Reporting --> Reports[outputs/reports/ Reports]
 ```
-*Full architectural documentation available in [docs/architecture.md](docs/architecture.md).*
+
+### 8.2 End-to-End Machine Learning Workflow
+```mermaid
+flowchart TD
+    A[Raw Student Dataset<br>data/raw/student_performance_data.csv] --> B[Schema & Boundary Validation<br>src/data_loader.py]
+    B --> C[Exploratory Data Analysis<br>notebooks/exploratory_analysis.ipynb]
+    B --> D[Train-Test Split 80/20<br>Fixed Random State 42]
+    
+    subgraph Feature Processing
+        D --> E[Academic Feature Engineering<br>Engagement, Momentum, Efficiency]
+        E --> F[Missing Value Imputation<br>Median for Numeric, Mode for Categorical]
+        F --> G[Standardization & One-Hot Encoding<br>StandardScaler, OneHotEncoder]
+    end
+
+    subgraph Model Training & Benchmarking
+        G --> H[4 Candidate Regression Models<br>Linear, Decision Tree, Random Forest, Gradient Boosting]
+        H --> I[5-Fold Cross-Validation<br>Track R² Mean & Std]
+        I --> J[Evaluate on 20% Unseen Test Set<br>MAE, MSE, RMSE, R²]
+        J --> K[Optimal Model Selection & Persistence<br>models/student_performance_model.joblib]
+    end
+
+    subgraph Runtime Inference & Advisory
+        K --> L[New Student Input via CLI]
+        L --> M[Predict Continuous Final Exam Score]
+        M --> N[Categorize Academic Performance Tier]
+        N --> O[Generate Transparent Rule-Based Recommendations]
+    end
+```
 
 ---
 
 ## 9. Dataset
-- **Source**: Synthesized academic benchmark modeled on the UCI Machine Learning Repository Student Performance standards and Higher Education datasets.
-- **Dimensions**: 1,000 student records across 11 attributes.
-- **Attributes**:
-  - `Student_ID`: Unique identifier (dropped during modeling).
-  - `Attendance_Rate`: Percentage of attended classes ($0 - 100\%$).
-  - `Study_Hours_Per_Week`: Weekly self-study hours ($0 - 40$).
-  - `Previous_Score`: Prerequisite course score ($0 - 100$).
-  - `Assignment_Completion_Rate`: Submitted homework percentage ($0 - 100\%$).
-  - `Internal_Assessment_Score`: Midterm evaluation score ($0 - 100$).
-  - `Class_Participation`: Likert rating ($1 - 5$).
-  - `Parental_Education_Level`: Categorical (High School, Associate, Bachelor, Master, Doctorate).
-  - `Internet_Access`: Binary (`Yes`, `No`).
-  - `Extra_Curricular`: Binary (`Yes`, `No`).
-  - `Final_Exam_Score`: **Target continuous variable** ($0 - 100$).
-*Full details and statistics available in [DATASET.md](DATASET.md).*
+
+- **Origin**: Synthesized academic benchmark modeled after the **UCI Machine Learning Repository Student Performance Dataset** (Cortez and Silva, 2008) and Higher Education Student Performance research.
+- **Dataset File**: `data/raw/student_performance_data.csv`
+- **Total Samples**: 1,000 students
+- **Total Features**: 11 attributes (1 Identifier, 6 Numerical Features, 3 Categorical Features, 1 Target Variable)
+
+### Attribute Dictionary
+
+| Attribute Name | Data Type | Domain / Range | Description |
+|:---|:---|:---|:---|
+| `Student_ID` | String | `STU_0001` - `STU_1000` | Anonymized unique student ID |
+| `Attendance_Rate` | Float64 | $0.0 - 100.0\%$ | Percentage of scheduled lectures attended |
+| `Study_Hours_Per_Week` | Float64 | $0.0 - 40.0$ hrs/wk | Self-reported weekly academic study hours |
+| `Previous_Score` | Float64 | $0.0 - 100.0$ | Prior semester prerequisite examination score |
+| `Assignment_Completion_Rate` | Float64 | $0.0 - 100.0\%$ | Formative homework assignment submission rate |
+| `Internal_Assessment_Score` | Float64 | $0.0 - 100.0$ | Continuous internal assessment / midterm mark |
+| `Class_Participation` | Int64 | $1 - 5$ | Likert rubric rating of classroom interaction |
+| `Parental_Education_Level` | Category | 5 Categories | High School, Associate, Bachelor, Master, Doctorate |
+| `Internet_Access` | Binary | `Yes`, `No` | Reliable home internet connectivity |
+| `Extra_Curricular` | Binary | `Yes`, `No` | University sports / student clubs participation |
+| `Final_Exam_Score` | Float64 | $0.0 - 100.0$ | **Target Continuous Variable**: Summative exam mark |
+
+### Missing Values & Imputation Policy
+- Controlled realistic missing values (~2% in Attendance, Study Hours, and Parental Education) are handled dynamically:
+  - **Numerical**: Imputed with **Median** strategy (`SimpleImputer(strategy='median')`).
+  - **Categorical**: Imputed with **Most Frequent** modal strategy (`SimpleImputer(strategy='most_frequent')`).
+  - **Zero Leakage**: All imputers and scalers are fitted exclusively on the training partition ($X_{train}$).
 
 ---
 
@@ -339,20 +380,9 @@ student-performance-prediction/
 │   └── reports/
 │       ├── project_report.md
 │       └── project_summary.json
-├── docs/
-│   ├── architecture.md
-│   ├── workflow.md
-│   ├── use_case.md
-│   ├── sequence.md
-│   ├── component_class.md
-│   └── data_storage_justification.md
 ├── main.py
 ├── requirements.txt
 ├── README.md
-├── statement.md
-├── DATASET.md
-├── PROJECT_PLAN.md
-├── VITYARTHI_COMPLIANCE.md
 ├── .gitignore
 └── LICENSE
 ```
