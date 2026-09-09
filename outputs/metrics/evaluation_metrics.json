@@ -1,0 +1,84 @@
+{
+    "best_model": "Linear Regression",
+    "selection_criterion": "Highest Test R\u00b2 with minimum test RMSE",
+    "comparison_summary": [
+        {
+            "Model": "Linear Regression",
+            "MAE": 3.7153,
+            "MSE": 20.5688,
+            "RMSE": 4.5353,
+            "R2": 0.7348,
+            "CV_R2_Mean": 0.1885,
+            "CV_R2_Std": 1.0004
+        },
+        {
+            "Model": "Gradient Boosting",
+            "MAE": 4.1959,
+            "MSE": 27.1812,
+            "RMSE": 5.2136,
+            "R2": 0.6495,
+            "CV_R2_Mean": 0.6775,
+            "CV_R2_Std": 0.0315
+        },
+        {
+            "Model": "Random Forest",
+            "MAE": 4.4095,
+            "MSE": 29.5358,
+            "RMSE": 5.4347,
+            "R2": 0.6191,
+            "CV_R2_Mean": 0.6393,
+            "CV_R2_Std": 0.026
+        },
+        {
+            "Model": "Decision Tree",
+            "MAE": 5.2247,
+            "MSE": 41.574,
+            "RMSE": 6.4478,
+            "R2": 0.4639,
+            "CV_R2_Mean": 0.4792,
+            "CV_R2_Std": 0.049
+        }
+    ],
+    "detailed_model_metrics": {
+        "Linear Regression": {
+            "cv_r2_mean": 0.18851276286453428,
+            "cv_r2_std": 1.0004465957185085,
+            "test_metrics": {
+                "MAE": 3.7153,
+                "MSE": 20.5688,
+                "RMSE": 4.5353,
+                "R2": 0.7348
+            }
+        },
+        "Decision Tree": {
+            "cv_r2_mean": 0.4791856305272873,
+            "cv_r2_std": 0.04898121051521504,
+            "test_metrics": {
+                "MAE": 5.2247,
+                "MSE": 41.574,
+                "RMSE": 6.4478,
+                "R2": 0.4639
+            }
+        },
+        "Random Forest": {
+            "cv_r2_mean": 0.6393416998810979,
+            "cv_r2_std": 0.026047440266870742,
+            "test_metrics": {
+                "MAE": 4.4095,
+                "MSE": 29.5358,
+                "RMSE": 5.4347,
+                "R2": 0.6191
+            }
+        },
+        "Gradient Boosting": {
+            "cv_r2_mean": 0.6774638076024053,
+            "cv_r2_std": 0.03146179305312213,
+            "test_metrics": {
+                "MAE": 4.1959,
+                "MSE": 27.1812,
+                "RMSE": 5.2136,
+                "R2": 0.6495
+            }
+        }
+    }
+}
