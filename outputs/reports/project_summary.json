@@ -1,0 +1,47 @@
+{
+    "generated_at": "2026-09-09 13:47:06",
+    "dataset_shape": "1000 rows, 11 columns",
+    "best_model": "Linear Regression",
+    "metrics": {
+        "Linear Regression": {
+            "cv_r2_mean": 0.18851276286453428,
+            "cv_r2_std": 1.0004465957185085,
+            "test_metrics": {
+                "MAE": 3.7153,
+                "MSE": 20.5688,
+                "RMSE": 4.5353,
+                "R2": 0.7348
+            }
+        },
+        "Decision Tree": {
+            "cv_r2_mean": 0.4791856305272873,
+            "cv_r2_std": 0.04898121051521504,
+            "test_metrics": {
+                "MAE": 5.2247,
+                "MSE": 41.574,
+                "RMSE": 6.4478,
+                "R2": 0.4639
+            }
+        },
+        "Random Forest": {
+            "cv_r2_mean": 0.6393416998810979,
+            "cv_r2_std": 0.026047440266870742,
+            "test_metrics": {
+                "MAE": 4.4095,
+                "MSE": 29.5358,
+                "RMSE": 5.4347,
+                "R2": 0.6191
+            }
+        },
+        "Gradient Boosting": {
+            "cv_r2_mean": 0.6774638076024053,
+            "cv_r2_std": 0.03146179305312213,
+            "test_metrics": {
+                "MAE": 4.1959,
+                "MSE": 27.1812,
+                "RMSE": 5.2136,
+                "R2": 0.6495
+            }
+        }
+    }
+}
